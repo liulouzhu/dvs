@@ -12,10 +12,14 @@ class dataset(data.Dataset):
             self.data_list = args.test_list
         else:
             self.data_list = args.train_list
-        
+
+        self.list = list(open(self.data_list, 'r'))
+
+        print("Data list length: ", len(self.list))
+
         self.test_mode = test_mode
         self.n_len = 800
-        self.a_len = len(self.data_list) - self.n_len
+        self.a_len = len(self.list) - self.n_len
 
 
     # def load_data(self):
