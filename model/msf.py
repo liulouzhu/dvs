@@ -6,7 +6,7 @@ from spikingjelly.activation_based import neuron, layer, functional
 # R1
 
 class LIFNeuron(neuron.LIFNode):
-    def __init__(self, tau=0.625, v_threshold=1.0, v_reset=0.0):
+    def __init__(self, tau=2.0, v_threshold=1.0, v_reset=0.0):
         super().__init__(tau=tau, v_threshold=v_threshold, v_reset=v_reset)
         self.tau = tau
         self.v_threshold = v_threshold
@@ -23,7 +23,7 @@ class LocalSpikingFeature(nn.Module):
                     nn.Conv1d(in_channels, out_channels, kernel_size=k, 
                              dilation=d, padding=padding),
                     nn.BatchNorm1d(out_channels),
-                    LIFNeuron(tau=0.625)
+                    LIFNeuron(tau=2.0)
                 )
             )
     
@@ -43,7 +43,7 @@ class GlobalSpikingFeature(nn.Module):
         self.sigma = sigma
         self.channel_reduce = nn.Conv1d(in_channels, out_channels, 1)
         self.gcn_conv = nn.Conv1d(out_channels, out_channels, 1)
-        self.lif = LIFNeuron(tau=0.625)
+        self.lif = LIFNeuron(tau=2.0)
         
     def build_adjacency(self, x):
         # 特征相似度分支
@@ -76,7 +76,7 @@ class TemporalInteractionModule(nn.Module):
         self.temporal_conv = nn.Sequential(
             nn.Conv1d(channels, channels, 3, padding=1),
             nn.BatchNorm1d(channels),
-            LIFNeuron(tau=0.625)
+            LIFNeuron(tau=2.0)
         )
         
     def forward(self, x):

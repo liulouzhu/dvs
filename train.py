@@ -6,7 +6,7 @@ from utils.losses import DMIL_CenterLoss
 import option
 args = option.paper_args()
 
-def train(model,optimizer,train_loader,test_loader,epoch):
+def train(model,optimizer,train_loader,epoch):
     model.train()
 
     criterion = DMIL_CenterLoss(k=4, lambda_center=20).cuda()
